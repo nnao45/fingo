@@ -16,7 +16,7 @@ func para(root, word string, d os.FileInfo, buff *[]byte, wg *sync.WaitGroup) {
 	wg.Done()
 }
 
-func FindFile(root, word string) {
+func FindFile(root, word string) string{
 	dir, err := ioutil.ReadDir(root)
 	if err != nil {
 		fmt.Println(err)
@@ -31,7 +31,7 @@ func FindFile(root, word string) {
 		go para(root, word, d, &buff, wg)
 	}
 	wg.Wait()
-	fmt.Print(string(buff))
+	return string(buff)
 }
 
 func dirwalk(word, dir string) []byte {
