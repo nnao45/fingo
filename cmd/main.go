@@ -9,5 +9,5 @@ import (
 
 func main() {
 	fmt.Printf("cpu: %d\n", runtime.NumCPU())
-	fmt.Print(fingo.FindFile(os.Args[1], os.Args[2]))
+	fmt.Printf("%s", fingo.FindFile(os.Args[1], os.Args[2]))
 }
