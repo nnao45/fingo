@@ -1,4 +1,4 @@
-package main
+package fingo
 
 import (
 	"fmt"
@@ -11,16 +11,12 @@ import (
 	"unsafe"
 )
 
-func main() {
-	firstDir(os.Args[1])
-}
-
-func para(root string, d os.FileInfo, buff *[]byte, wg *sync.WaitGroup) {
-	*buff = append(*buff, dirwalk(filepath.Join(root, d.Name()))...)
+func para(root, word string, d os.FileInfo, buff *[]byte, wg *sync.WaitGroup) {
+	*buff = append(*buff, dirwalk(word, filepath.Join(root, d.Name()))...)
 	wg.Done()
 }
 
-func firstDir(root string) {
+func FindFile(root, word string) {
 	dir, err := ioutil.ReadDir(root)
 	if err != nil {
 		fmt.Println(err)
@@ -32,13 +28,13 @@ func firstDir(root string) {
 
 	for _, d := range dir {
 		wg.Add(1)
-		go para(root, d, &buff, wg)
+		go para(root, word, d, &buff, wg)
 	}
 	wg.Wait()
 	fmt.Print(string(buff))
 }
 
-func dirwalk(dir string) []byte {
+func dirwalk(word, dir string) []byte {
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
 		fmt.Println(err)
@@ -50,7 +46,7 @@ func dirwalk(dir string) []byte {
 			paths = append(paths, dirwalk(filepath.Join(dir, file.Name()))...)
 			continue
 		}
-		if strings.Contains(file.Name(), os.Args[2]) {
+		if strings.Contains(file.Name(), word) {
 			path := filepath.Join(dir, file.Name()) + "\n"
 			bp := *(*[]byte)(unsafe.Pointer(&path))
 			paths = append(paths, bp...)
