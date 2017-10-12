@@ -16,7 +16,7 @@ func para(root, word string, d os.FileInfo, buff *[]byte, wg *sync.WaitGroup) {
 	wg.Done()
 }
 
-func FindFile(root, word string) string{
+func FindFile(root, word string) string {
 	dir, err := ioutil.ReadDir(root)
 	if err != nil {
 		fmt.Println(err)
