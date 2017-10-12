@@ -43,7 +43,7 @@ func dirwalk(word, dir string) []byte {
 	paths := make([]byte, 0, 200)
 	for _, file := range files {
 		if file.IsDir() {
-			paths = append(paths, dirwalk(filepath.Join(dir, file.Name()))...)
+			paths = append(paths, dirwalk(word, filepath.Join(dir, file.Name()))...)
 			continue
 		}
 		if strings.Contains(file.Name(), word) {
