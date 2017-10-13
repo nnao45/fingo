@@ -25,7 +25,6 @@ func FindFile(root, word string) string {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	wg := new(sync.WaitGroup)
 	buff := make([]byte, 0, 1000)
-	defer close(buff)
 
 	for _, d := range dir {
 		wg.Add(1)
@@ -42,7 +41,6 @@ func dirwalk(word, dir string) []byte {
 	}
 
 	paths := make([]byte, 0, 200)
-	defer close(paths)
 
 	for _, file := range files {
 		if file.IsDir() {
