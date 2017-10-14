@@ -27,6 +27,10 @@ func FindFile(root, word string) string {
 	buff := make([]byte, 0, 1000)
 
 	for _, d := range dir {
+		if !d.IsDir() {
+			dirwalk(word, filepath.Join(root, d.Name()))
+			continue
+		}
 		wg.Add(1)
 		go para(root, word, d, &buff, wg)
 	}
