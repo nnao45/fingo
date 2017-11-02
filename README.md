@@ -6,7 +6,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/nao4arale/fingo"
+	"github.com/nnao45/fingo"
 	"os"
 	"runtime"
 )
